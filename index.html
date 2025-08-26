@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PubMed Medical Doubts Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Ask a Medical Question</h2>
+        <input type="text" id="query" placeholder="e.g., 'headache treatment'">
+        <button onclick="searchPubMed()">Search PubMed</button>
+        <pre id="result"></pre>
+    </div>
+    <script>
+        async function searchPubMed() {
+            const query = document.getElementById('query').value;
+            document.getElementById('result').innerText = 'Loading...';
+            const resp = await fetch(`http://localhost:8000/search_pubmed?query=${encodeURIComponent(query)}`);
+            const data = await resp.json();
+            document.getElementById('result').innerText = data.abstract || data.error;
+        }
+    </script>
+</body>
+</html>
